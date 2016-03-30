@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-//using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Yayson
@@ -11,16 +10,6 @@ namespace Yayson
     // To enable this option, right-click on the project and select the Properties menu item. In the Build tab select "Produce outputs on build".
     public class Yayson
     {
-        public Yayson()
-        {
-
-        }
-
-        //public string WashString(string s)
-        //{
-        //    return Regex.Replace(s, @"\s+", "");
-        //}
-
         public JsonToken MakeToken(string s)
         {
             var sb = new StringBuilder();
@@ -28,12 +17,7 @@ namespace Yayson
             IJsonCollection collection;
             collection = new JsonList();
             var root = collection as JsonList;
-            var inList = true;
-            //var inObject = !inList;
             var inString = false;
-            //var inKey = false;
-            //var inValue = false;
-            //var keyDone = false;
 
             foreach (var c in s)
             {
@@ -107,15 +91,6 @@ namespace Yayson
                                 valueString = sb.ToString();
                                 sb.Clear();
 
-                                //var valueToken = JsonTokenFactory.MakeToken(valueString);
-                                //collObj.Add(key, valueToken);
-
-                                //if (valueToken is IJsonCollection)
-                                //{
-                                //    stack.Push(collection);
-                                //    collection = (valueToken as IJsonCollection);
-                                //}
-
                                 collObj.InValue = false;
                                 collObj.KeyDone = false;
                                 JsonObject thisObject = collection as JsonObject;
@@ -180,15 +155,6 @@ namespace Yayson
                             valueString = sb.ToString();
                             sb.Clear();
 
-                            //var valueToken = JsonTokenFactory.MakeToken(valueString);
-                            //collList.Add(string.Empty, valueToken);
-
-                            //if (valueToken is IJsonCollection)
-                            //{
-                            //    stack.Push(collection);
-                            //    collection = (valueToken as IJsonCollection);
-                            //}
-
                             JsonList thisList = collection as JsonList;
                             collection = stack.Pop();
                             collection.Add(collection.Key, thisList);
@@ -223,25 +189,6 @@ namespace Yayson
             }
 
             return root[0];
-
-
-            //if (s[0] == '{')
-            //{
-            //    token = new JsonObject();
-
-            //}
-            //else
-            //{
-            //    token = new JsonString("");
-            //}
-            //var isObject = false;
-            //var isList = false;
-            
-            //foreach(var c in s)
-            //{
-
-            //}
-            //return token;
         }
     }
 }
