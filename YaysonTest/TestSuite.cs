@@ -26,69 +26,69 @@ namespace YaysonTest
             jList.Contents.ForEach(c => Assert.IsType<JsonInteger>(c));
         }
 
-        [Fact]
-        public void UniTest2()
-        {
-            var s = @"[
-	            {
-		            color: ""red"",
+        //[Fact]
+        //public void UniTest2()
+        //{
+        //    var s = @"[
+	       //     {
+		      //      color: ""red"",
 
-                    value: ""#f00""
+        //            value: ""#f00""
 
-                },
-	            {
-		            color: ""green"",
-		            value: ""#0f0""
+        //        },
+	       //     {
+		      //      color: ""green"",
+		      //      value: ""#0f0""
 
-                },
-	            {
-		            color: ""blue"",
-		            value: ""#00f""
-	            },
-	            {
-		            color: ""cyan"",
-		            value: ""#0ff""
+        //        },
+	       //     {
+		      //      color: ""blue"",
+		      //      value: ""#00f""
+	       //     },
+	       //     {
+		      //      color: ""cyan"",
+		      //      value: ""#0ff""
 
-                },
-	            {
-		            color: ""magenta"",
-		            value: ""#f0f""
+        //        },
+	       //     {
+		      //      color: ""magenta"",
+		      //      value: ""#f0f""
 
-                },
-	            {
-		            color: ""yellow"",
-		            value: ""#ff0""
+        //        },
+	       //     {
+		      //      color: ""yellow"",
+		      //      value: ""#ff0""
 
-                },
-	            {
-		            color: ""black"",
-		            value: ""#000""
+        //        },
+	       //     {
+		      //      color: ""black"",
+		      //      value: ""#000""
 
-                }
-            ]";
+        //        }
+        //    ]";
 
-            var token = yayson.MakeToken(s);
-            Assert.IsType<JsonList>(token);
-            var jList = token as JsonList;
-            var firstChild = jList[0] as JsonObject;
-            Assert.StrictEqual(7, jList.GetCount());
-            Assert.StrictEqual(2, firstChild.GetCount());
-        }
+        //    var token = yayson.MakeToken(s);
+        //    Assert.IsType<JsonList>(token);
+        //    var jList = token as JsonList;
+        //    var firstChild = jList[0] as JsonObject;
+        //    Assert.StrictEqual(7, jList.GetCount());
+        //    Assert.StrictEqual(2, firstChild.GetCount());
+        //}
 
-        [Fact]
-        public void UniTest3()
-        {
-            var s = @"{
-	            color: ""red"",
+        //[Fact]
+        //public void UniTest3()
+        //{
+        //    var s = @"{
+	       //     color: ""red"",
 
-                value: ""#f00""
-            }";
+        //        value: ""#f00""
+        //    }";
 
-            var token = yayson.MakeToken(s);
-            Assert.IsType<JsonObject>(token);
-            var jObject = token as JsonObject;
-            Assert.StrictEqual(2, jObject.GetCount());
-        }
+        //    var token = yayson.MakeToken(s);
+        //    Assert.IsType<JsonObject>(token);
+        //    var jObject = token as JsonObject;
+        //    Assert.StrictEqual(2, jObject.GetCount());
+        //}
 
         [Fact]
         public void UniTest4()
