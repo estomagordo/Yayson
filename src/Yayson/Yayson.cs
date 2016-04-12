@@ -37,40 +37,41 @@ namespace Yayson
                             if (c == '"')
                             {
                                 inString = false;
+                                collObj.Key = sb.ToString();
+                                sb.Clear();
+                                collObj.InKey = false;
+                                collObj.KeyDone = true;
                             }                            
                             else
                             {
                                 sb.Append(c);
                             }
                         }     
-                        else
+                        else if (c == '"')
                         {
-                            if (c == '"')
-                            {
-                                inString = true;
-                            }
-                            else
-                            {
-                                collObj.Key = sb.ToString();
-                                sb.Clear();
-                                collObj.InKey = false;
-                                collObj.KeyDone = true;
-                            }                            
-                        }                   
+                            inString = true;
+                        }                                           
                     }
                     else
                     {                        
-                        collObj.InValue = true;
+                        if (!collObj.InValue)
+                        {
+                            if (c == ':')
+                            {
+                                collObj.InValue = true;
+                                continue;
+                            }
+                        }
                         
                         if (inString)
                         {
                             if (c == '"')
                             {
+                                sb.Append(c);
                                 valueString = sb.ToString();
                                 sb.Clear();
                                 inString = false;
-                                collObj.InValue = false;
-                                collObj.KeyDone = false;
+                                collObj.InValue = false;                                
                             }
                             else
                             {
@@ -79,7 +80,12 @@ namespace Yayson
                         }
                         else
                         {
-                            if (c == ',')
+                            if (c == '"')
+                            {
+                                sb.Append(c);
+                                inString = true;                                
+                            }
+                            else if (c == ',')
                             {
                                 valueString = sb.ToString();
                                 sb.Clear();
@@ -132,20 +138,23 @@ namespace Yayson
                     
                     if (inString)
                     {
+                        sb.Append(c);
                         if (c == '"')
                         {
+                            sb.Append(c);
                             valueString = sb.ToString();
                             sb.Clear();
                             inString = false;
                         }
-                        else
-                        {
-                            sb.Append(c);
-                        }
                     }
                     else
                     {
-                        if (c == ',')
+                        if (c == '"')
+                        {
+                            sb.Append(c);
+                            inString = true;                            
+                        }
+                        else if (c == ',')
                         {
                             valueString = sb.ToString();
                             sb.Clear();
@@ -186,6 +195,11 @@ namespace Yayson
                         }
                     }
                 }
+            }
+
+            if (sb.Length > 0)
+            {
+                collection.Add(collection.Key, JsonTokenFactory.MakeToken(sb.ToString()));
             }
 
             return root[0];

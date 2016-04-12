@@ -213,5 +213,54 @@ namespace YaysonTest
             Assert.IsType<JsonString>(someType);
             Assert.StrictEqual("Chocolate", (someType as JsonString).Value);
         }
+
+        [Fact]
+        public void UniTest6()
+        {
+            var s = @"
+            {
+	            ""id"": ""0001"",
+
+                ""type"": ""donut"",
+	            ""name"": ""Cake"",
+	            ""image"":
+		            {
+                            ""url"": ""images/0001.jpg"",
+			            ""width"": 200,
+			            ""height"": 200
+
+                    },
+	            ""thumbnail"":
+		            {
+                            ""url"": ""images/thumbnails/0001.jpg"",
+			            ""width"": 32,
+			            ""height"": 32
+
+                    }
+            }";
+
+            var token = yayson.MakeToken(s);
+            Assert.IsType<JsonObject>(token);
+            var jObject = token as JsonObject;
+            Assert.StrictEqual(5, jObject.GetCount());
+            var width = jObject[4]["thumbnail"]["width"] as JsonInteger;
+            Assert.StrictEqual(32, width.Value);
+        }
+
+        [Fact]
+        public void SmallTests()
+        {
+            var standAloneString = @"""agurk""";
+            var stringToken = yayson.MakeToken(standAloneString) as JsonString;
+            Assert.IsType<JsonString>(stringToken);
+
+            var standAloneInt = "221";
+            var intToken = yayson.MakeToken(standAloneInt) as JsonInteger;
+            Assert.IsType<JsonInteger>(intToken);
+
+            var standAloneBool = "true";
+            var boolToken = yayson.MakeToken(standAloneBool) as JsonBoolean;
+            Assert.IsType<JsonBoolean>(boolToken);
+        }
     }
 }
