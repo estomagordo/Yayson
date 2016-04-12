@@ -19,7 +19,7 @@ namespace Yayson
             }
 
             var c = s[0];
-            if (char.IsNumber(c))
+            if (char.IsNumber(c) || c == '-')
             {
                 return JsonNumberFactory.MakeNumber(s) as JsonToken;
             }            

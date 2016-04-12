@@ -262,5 +262,25 @@ namespace YaysonTest
             var boolToken = yayson.MakeToken(standAloneBool) as JsonBoolean;
             Assert.IsType<JsonBoolean>(boolToken);
         }
+
+        [Fact]
+        public void MoreNumberTests()
+        {
+            var negativeIntegerString = "-21";
+            var negativeIntToken = yayson.MakeToken(negativeIntegerString) as JsonInteger;
+            Assert.StrictEqual(-21, negativeIntToken.Value);
+
+            var negativeDoubleString = "-911.28";
+            var negativeDoubleToken = yayson.MakeToken(negativeDoubleString) as JsonDouble;
+            Assert.StrictEqual(-911.28, negativeDoubleToken.Value);
+
+            var exponentLittleEString = "2.121e-3";
+            var exponentLittleEToken = yayson.MakeToken(exponentLittleEString) as JsonDouble;
+            Assert.StrictEqual(0.002121, exponentLittleEToken.Value);
+
+            var negativeExponentBigEString = "-2.121E-3";
+            var negativeExponentBigEToken = yayson.MakeToken(negativeExponentBigEString) as JsonDouble;
+            Assert.StrictEqual(-0.002121, negativeExponentBigEToken.Value);
+        }
     }
 }
