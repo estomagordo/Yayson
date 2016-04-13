@@ -262,6 +262,14 @@ namespace YaysonTest
             var standAloneBool = "true";
             var boolToken = yayson.MakeToken(standAloneBool) as JsonBoolean;
             Assert.IsType<JsonBoolean>(boolToken);
+
+            var emptyObject = "{}";
+            var objectToken = yayson.MakeToken(emptyObject) as JsonObject;
+            Assert.IsType<JsonObject>(objectToken);
+
+            var emptyList = "[]";
+            var listToken = yayson.MakeToken(emptyList) as JsonList;
+            Assert.IsType<JsonList>(listToken);
         }
 
         [Fact]

@@ -41,7 +41,7 @@ namespace Yayson
                                 sb.Clear();
                                 collObj.InKey = false;
                                 collObj.KeyDone = true;
-                            }                            
+                            }                                                    
                             else
                             {
                                 sb.Append(c);
@@ -50,7 +50,13 @@ namespace Yayson
                         else if (c == '"')
                         {
                             inString = true;
-                        }                                           
+                        }  
+                        else if (collObj.IsStopper(c))
+                        {
+                            JsonObject thisObject = collection as JsonObject;
+                            collection = stack.Pop();
+                            collection.Add(collection.Key, thisObject);
+                        }                                         
                     }
                     else
                     {                        
