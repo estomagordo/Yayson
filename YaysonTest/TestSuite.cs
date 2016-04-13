@@ -298,6 +298,10 @@ namespace YaysonTest
             var erroneousNumberString = "[28, -1f7]";
             ex = Assert.Throws<YaysonException>(() => yayson.MakeToken(erroneousNumberString));
             Assert.StrictEqual("Illegal number format.", ex.Message);
+
+            var erroneousTokenString = "[28, null, ^gg]";
+            ex = Assert.Throws<YaysonException>(() => yayson.MakeToken(erroneousTokenString));
+            Assert.StrictEqual("Unknown Json token.", ex.Message);
         }
     }
 }

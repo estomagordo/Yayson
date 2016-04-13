@@ -47,10 +47,11 @@ namespace Yayson
             {
                 return new JsonList(s) as JsonToken;
             }
-            else
+            else if (c == '{')
             {
                 return new JsonObject(s) as JsonToken;
             }
+            throw new YaysonException("Unknown Json token.");
         }
     }
 }
