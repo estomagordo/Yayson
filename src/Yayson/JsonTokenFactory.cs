@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Yayson.Exceptions;
 
 namespace Yayson
 {
@@ -11,17 +12,32 @@ namespace Yayson
         {
             if (s.ToUpper() == "TRUE" || s.ToUpper() == "FALSE")
             {
-                return new JsonBoolean(s);
+                if (s == "true" || s == "false")
+                {
+                    return new JsonBoolean(s);
+                }
+                throw new YaysonException("Boolean must be strictly lower case.");                
             }
             else if (s.ToUpper() == "NULL")
             {
-                return new JsonNull();
+                if (s == "null")
+                {
+                    return new JsonNull();
+                }
+                throw new YaysonException("Null must be strictly lower case.");
             }
 
             var c = s[0];
             if (char.IsNumber(c) || c == '-')
             {
-                return JsonNumberFactory.MakeNumber(s) as JsonToken;
+                try
+                {
+                    return JsonNumberFactory.MakeNumber(s) as JsonToken;
+                }
+                catch(Exception e)
+                {
+                    throw new YaysonException("Illegal number format.", e);
+                }
             }            
             else if (c == '"')
             {

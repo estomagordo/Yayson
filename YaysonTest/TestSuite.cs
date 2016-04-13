@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 using Yayson;
+using Yayson.Exceptions;
 
 namespace YaysonTest
 {
@@ -281,6 +282,22 @@ namespace YaysonTest
             var negativeExponentBigEString = "-2.121E-3";
             var negativeExponentBigEToken = yayson.MakeToken(negativeExponentBigEString) as JsonDouble;
             Assert.StrictEqual(-0.002121, negativeExponentBigEToken.Value);
+        }
+
+        [Fact]
+        public void ExceptionTests()
+        {
+            var erroneousBoolString = "False";
+            Exception ex = Assert.Throws<YaysonException>(() => yayson.MakeToken(erroneousBoolString));
+            Assert.StrictEqual("Boolean must be strictly lower case.", ex.Message);
+
+            var erroneousNullString = "NULL";
+            ex = Assert.Throws<YaysonException>(() => yayson.MakeToken(erroneousNullString));
+            Assert.StrictEqual("Null must be strictly lower case.", ex.Message);
+
+            var erroneousNumberString = "[28, -1f7]";
+            ex = Assert.Throws<YaysonException>(() => yayson.MakeToken(erroneousNumberString));
+            Assert.StrictEqual("Illegal number format.", ex.Message);
         }
     }
 }
